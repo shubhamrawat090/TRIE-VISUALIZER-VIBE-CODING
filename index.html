@@ -3,20 +3,109 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trie Visualizer</title>
+    <title>Interactive Trie Visualizer</title>
     <script src="https://cdn.tailwindcss.com"></script>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://esm.sh/react@^19.1.0/",
-    "react": "https://esm.sh/react@^19.1.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.1.0/"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script type="importmap">
+      {
+        "imports": {
+          "react/": "https://esm.sh/react@^19.1.0/",
+          "react": "https://esm.sh/react@^19.1.0",
+          "react-dom/": "https://esm.sh/react-dom@^19.1.0/"
+        }
+      }
+    </script>
+    <style>
+      :root {
+        /* Classic Theme Variables */
+        --font-heading: 'Inter', sans-serif;
+        --font-body: 'Inter', sans-serif;
+        
+        --color-bg: #f4f4f5; /* zinc-100 */
+        --color-surface: #ffffff;
+        --color-text: #18181b; /* zinc-900 */
+        --color-text-muted: #71717a; /* zinc-500 */
+        --color-border: #e4e4e7; /* zinc-200 */
+        
+        --color-primary: #3b82f6; /* blue-500 */
+        --color-primary-hover: #2563eb; /* blue-600 */
+        --color-secondary: #10b981; /* emerald-500 */
+        --color-secondary-hover: #059669; /* emerald-600 */
+        --color-accent: #f97316; /* orange-500 */
+        --color-accent-hover: #ea580c; /* orange-600 */
+        
+        --color-success: #22c55e; /* green-500 */
+        --color-error: #ef4444; /* red-500 */
+        --color-info: #06b6d4; /* cyan-500 */
+        
+        --color-highlight: #facc15; /* yellow-400 */
+        --color-highlight-text: #18181b;
+        --color-highlight-border: #facc15;
+        --color-end-of-word: #4ade80; /* green-400 */
+        --color-end-of-word-text: #18181b;
+        --color-end-of-word-border: #4ade80;
+        --color-node-bg: #e4e4e7; /* zinc-200 */
+        --color-node-border: #d4d4d8; /* zinc-300 */
+        --color-connector: #a1a1aa; /* zinc-400 */
+        
+        --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      }
+      
+      [data-theme="spooky"] {
+        --font-heading: 'Creepster', cursive;
+        --font-body: 'Special Elite', cursive;
+
+        --color-bg: #1a1a1d;
+        --color-surface: #2c2c31;
+        --color-text: #e0e0e0;
+        --color-text-muted: #888;
+        --color-border: #444;
+
+        --color-primary: #9a4ff6; /* Sinister Purple */
+        --color-primary-hover: #823bd6;
+        --color-secondary: #32cd32; /* Ectoplasm Green */
+        --color-secondary-hover: #28a428;
+        --color-accent: #ff7518; /* Pumpkin Orange */
+        --color-accent-hover: #e0600a;
+
+        --color-success: #32cd32;
+        --color-error: #e53e3e;
+        --color-info: #00ffff;
+        
+        --color-highlight: #a3e635; /* lime-400 */
+        --color-highlight-text: #18181b;
+        --color-highlight-border: #a3e635;
+        --color-end-of-word: #ff7518; /* orange-500 */
+        --color-end-of-word-text: #18181b;
+        --color-end-of-word-border: #ff7518;
+        --color-node-bg: #4a5568; /* slate-700 */
+        --color-node-border: #718096; /* slate-500 */
+        --color-connector: #718096; /* slate-500 */
+        
+        --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+        --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.6), 0 8px 10px -6px rgb(0 0 0 / 0.6);
+      }
+
+      body {
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        font-family: var(--font-body);
+        transition: background-color 0.5s ease;
+      }
+
+      .bg-spooky-pattern {
+        background-image:
+          radial-gradient(circle at 100% 100%, transparent 4px, var(--color-border) 4px, var(--color-border) 5px, transparent 5px),
+          radial-gradient(circle at 0 0, transparent 4px, var(--color-border) 4px, var(--color-border) 5px, transparent 5px);
+        background-size: 32px 32px;
+      }
+    </style>
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body class="bg-slate-50 dark:bg-slate-900">
+  <body>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

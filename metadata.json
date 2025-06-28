@@ -1,6 +1,5 @@
 {
   "name": "Interactive Trie Visualizer",
-  "description": "An educational tool to visualize the Trie (prefix tree) data structure. Interactively insert words and search for prefixes to see how the tree is built and traversed.",
-  "requestFramePermissions": [],
-  "prompt": ""
+  "description": "An educational tool to visualize the Trie data structure. Interactively insert words and search for prefixes, and switch between a spooky, haunted theme and a clean, classic interface with the click of a button.",
+  "requestFramePermissions": []
 }
