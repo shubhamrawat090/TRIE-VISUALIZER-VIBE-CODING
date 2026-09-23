@@ -1,6 +1,10 @@
 import { useState, useRef, useCallback } from 'react';
 import { Trie, TrieNode } from '../lib/Trie';
+import { DEMO_WORDS } from '../lib/demoWords';
 import type { TrieNodeData } from '../types';
+
+const DEMO_CHAR_DELAY_MS = 80;
+const DEMO_WORD_GAP_MS = 120;
 
 const convertNodeToData = (node: TrieNode, id: string): TrieNodeData => {
   const childrenData: { [key: string]: TrieNodeData } = {};
@@ -155,5 +159,81 @@ export const useTrie = () => {
     setInsertResult(null);
   }, []);
 
-  return { visualTrie, insertWord, searchPrefix, searchWord, isAnimating, animationMessage, searchPath, searchResult, wordSearchResult, insertResult, clearSearch };
+  const clearTrie = useCallback(() => {
+    if (isAnimating) return;
+
+    trieInstance.current = new Trie();
+    setVisualTrie(convertNodeToData(trieInstance.current.root, 'root'));
+    setSearchPath([]);
+    setSearchResult(null);
+    setWordSearchResult(null);
+    setInsertResult(null);
+    setAnimationMessage(null);
+  }, [isAnimating]);
+
+  const loadDemoWords = useCallback(async () => {
+    if (isAnimating) return;
+
+    setIsAnimating(true);
+    setSearchPath(['root']);
+    setSearchResult(null);
+    setWordSearchResult(null);
+    setInsertResult(null);
+
+    trieInstance.current = new Trie();
+    setVisualTrie(convertNodeToData(trieInstance.current.root, 'root'));
+
+    await new Promise((r) => setTimeout(r, 200));
+
+    for (const word of DEMO_WORDS) {
+      setAnimationMessage(`Loading demo: ${word}`);
+
+      let currentNode = trieInstance.current.root;
+      let currentPath = ['root'];
+      const lowerCaseWord = word.toLowerCase();
+
+      for (const char of lowerCaseWord) {
+        const parentId = currentPath[currentPath.length - 1];
+        const newId = `${parentId}-${char}`;
+
+        if (currentNode.children.has(char)) {
+          currentNode = currentNode.children.get(char)!;
+        } else {
+          const newNode = new TrieNode(char);
+          currentNode.children.set(char, newNode);
+          currentNode = newNode;
+          setVisualTrie(convertNodeToData(trieInstance.current.root, 'root'));
+        }
+
+        currentPath.push(newId);
+        setSearchPath([...currentPath]);
+        await new Promise((r) => setTimeout(r, DEMO_CHAR_DELAY_MS));
+      }
+
+      currentNode.isEndOfWord = true;
+      setVisualTrie(convertNodeToData(trieInstance.current.root, 'root'));
+      await new Promise((r) => setTimeout(r, DEMO_WORD_GAP_MS));
+    }
+
+    setInsertResult(`Demo: Loaded ${DEMO_WORDS.length} words!`);
+    setIsAnimating(false);
+    setAnimationMessage(null);
+    setSearchPath([]);
+  }, [isAnimating]);
+
+  return {
+    visualTrie,
+    insertWord,
+    searchPrefix,
+    searchWord,
+    loadDemoWords,
+    clearTrie,
+    isAnimating,
+    animationMessage,
+    searchPath,
+    searchResult,
+    wordSearchResult,
+    insertResult,
+    clearSearch,
+  };
 };

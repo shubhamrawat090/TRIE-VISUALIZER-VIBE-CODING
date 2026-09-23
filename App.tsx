@@ -32,6 +32,9 @@ const SearchStatus = ({ theme, isAnimating, animationMessage, insertResult, word
   if (isAnimating && animationMessage) {
     message = theme === 'spooky' ? animationMessage.replace('...', ' the void...') : `${animationMessage}...`;
     style = "text-[--color-info] animate-pulse";
+  } else if (insertResult?.startsWith('Demo:')) {
+    message = insertResult.slice(5).trim();
+    style = 'text-[--color-success]';
   } else if (insertResult) {
     const word = insertResult.match(/"(.*?)"/)?.[1] || '';
     message = theme === 'spooky' ? `The word "${word}" has been etched. 💀` : `Word "${word}" inserted! ✅`;
@@ -90,7 +93,7 @@ const App: React.FC = () => {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchWordInputRef = useRef<HTMLInputElement>(null);
 
-  const { visualTrie, insertWord, searchPrefix, searchWord, isAnimating, animationMessage, searchPath, searchResult, wordSearchResult, insertResult, clearSearch } = useTrie();
+  const { visualTrie, insertWord, searchPrefix, searchWord, loadDemoWords, clearTrie, isAnimating, animationMessage, searchPath, searchResult, wordSearchResult, insertResult, clearSearch } = useTrie();
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -144,6 +147,17 @@ const App: React.FC = () => {
     }
   }, [searchWordValue, searchWord, clearSearch, theme]);
 
+  const handleLoadDemo = useCallback(async () => {
+    setError(null);
+    clearSearch();
+    await loadDemoWords();
+  }, [loadDemoWords, clearSearch]);
+
+  const handleClearTrie = useCallback(() => {
+    setError(null);
+    clearTrie();
+  }, [clearTrie]);
+
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>, action: () => void) => {
     if (e.key === 'Enter') {
       action();
@@ -153,7 +167,8 @@ const App: React.FC = () => {
   const buttonColors = {
     accent: 'bg-[--color-accent] text-white border-transparent hover:bg-[--color-accent-hover]',
     secondary: 'bg-[--color-secondary] text-white border-transparent hover:bg-[--color-secondary-hover]',
-    primary: 'bg-[--color-primary] text-white border-transparent hover:bg-[--color-primary-hover]',
+    primary: 'bg-[--color-primary] text-[--color-primary-contrast] border-transparent hover:bg-[--color-primary-hover]',
+    danger: 'bg-transparent text-[--color-error] border-[--color-error] hover:bg-[--color-error] hover:text-white',
   };
   
   const inputColors = {
@@ -191,7 +206,31 @@ const App: React.FC = () => {
               </h2>
               {/* SCALED DOWN: space-y-6 -> space-y-5 */}
               <div className="space-y-5">
-                
+
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <AppButton
+                    onClick={handleLoadDemo}
+                    disabled={isAnimating}
+                    color={buttonColors.primary}
+                    className="flex-1"
+                  >
+                    {theme === 'spooky' ? 'Summon demo lexicon' : 'Load demo words'}
+                  </AppButton>
+                  <AppButton
+                    onClick={handleClearTrie}
+                    disabled={isAnimating}
+                    color={buttonColors.danger}
+                    className="flex-1"
+                  >
+                    {theme === 'spooky' ? 'Banish trie' : 'Clear trie'}
+                  </AppButton>
+                </div>
+                <p className="text-sm text-center text-[--color-text-muted]" style={{ fontFamily: 'var(--font-body)' }}>
+                  {theme === 'spooky'
+                    ? 'Summon 31 demo words, or banish the tree to start fresh.'
+                    : 'Load sample words or reset the tree to empty.'}
+                </p>
+
                 <div>
                   {/* SCALED DOWN: text-lg -> text-base */}
                   <label htmlFor="insert-word" className="block text-base text-[--color-accent] mb-2" style={{ fontFamily: 'var(--font-body)'}}>
