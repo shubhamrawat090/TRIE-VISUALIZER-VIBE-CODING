@@ -7,86 +7,80 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <script type="importmap">
-      {
-        "imports": {
-          "react/": "https://esm.sh/react@^19.1.0/",
-          "react": "https://esm.sh/react@^19.1.0",
-          "react-dom/": "https://esm.sh/react-dom@^19.1.0/"
-        }
-      }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,700&family=Creepster&family=Special+Elite&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
       :root {
-        /* Classic Theme Variables */
-        --font-heading: 'Inter', sans-serif;
-        --font-body: 'Inter', sans-serif;
-        
-        --color-bg: #f4f4f5; /* zinc-100 */
-        --color-surface: #ffffff;
-        --color-text: #18181b; /* zinc-900 */
-        --color-text-muted: #71717a; /* zinc-500 */
-        --color-border: #e4e4e7; /* zinc-200 */
-        
-        --color-primary: #3b82f6; /* blue-500 */
-        --color-primary-hover: #2563eb; /* blue-600 */
-        --color-secondary: #10b981; /* emerald-500 */
-        --color-secondary-hover: #059669; /* emerald-600 */
-        --color-accent: #f97316; /* orange-500 */
-        --color-accent-hover: #ea580c; /* orange-600 */
-        
-        --color-success: #22c55e; /* green-500 */
-        --color-error: #ef4444; /* red-500 */
-        --color-info: #06b6d4; /* cyan-500 */
-        
-        --color-highlight: #facc15; /* yellow-400 */
-        --color-highlight-text: #18181b;
-        --color-highlight-border: #facc15;
-        --color-end-of-word: #4ade80; /* green-400 */
-        --color-end-of-word-text: #18181b;
-        --color-end-of-word-border: #4ade80;
-        --color-node-bg: #e4e4e7; /* zinc-200 */
-        --color-node-border: #d4d4d8; /* zinc-300 */
-        --color-connector: #a1a1aa; /* zinc-400 */
-        
-        --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        /* Beige Cream — classic theme */
+        --font-heading: 'Cormorant Garamond', Georgia, serif;
+        --font-body: 'Source Sans 3', system-ui, sans-serif;
+
+        --color-bg: #fff3d5;
+        --color-surface: #fff8e8;
+        --color-text: #1b4332;
+        --color-text-muted: #3d5a45;
+        --color-border: #c9b896;
+
+        --color-primary: #1b4332;
+        --color-primary-contrast: #fff3d5;
+        --color-primary-hover: #2d6a4f;
+        --color-secondary: #2d6a4f;
+        --color-secondary-hover: #40916c;
+        --color-accent: #40916c;
+        --color-accent-hover: #2d6a4f;
+
+        --color-success: #2d6a4f;
+        --color-error: #9b2226;
+        --color-info: #386641;
+
+        --color-highlight: #95d5b2;
+        --color-highlight-text: #1b4332;
+        --color-highlight-border: #40916c;
+        --color-end-of-word: #b7e4c7;
+        --color-end-of-word-text: #1b4332;
+        --color-end-of-word-border: #40916c;
+        --color-node-bg: #fff3d5;
+        --color-node-border: #1b4332;
+        --color-connector: #2d6a4f;
+
+        --shadow: 0 4px 6px -1px rgb(27 67 50 / 0.12), 0 2px 4px -2px rgb(27 67 50 / 0.08);
+        --shadow-lg: 0 10px 15px -3px rgb(27 67 50 / 0.14), 0 4px 6px -4px rgb(27 67 50 / 0.1);
       }
-      
+
       [data-theme="spooky"] {
+        /* Rotten Pumpkin Dream */
         --font-heading: 'Creepster', cursive;
         --font-body: 'Special Elite', cursive;
 
-        --color-bg: #1a1a1d;
-        --color-surface: #2c2c31;
-        --color-text: #e0e0e0;
-        --color-text-muted: #888;
-        --color-border: #444;
+        --color-bg: #1f1c24;
+        --color-surface: #2a2433;
+        --color-text: #fff3d5;
+        --color-text-muted: #c9b896;
+        --color-border: #4b006e;
 
-        --color-primary: #9a4ff6; /* Sinister Purple */
-        --color-primary-hover: #823bd6;
-        --color-secondary: #32cd32; /* Ectoplasm Green */
-        --color-secondary-hover: #28a428;
-        --color-accent: #ff7518; /* Pumpkin Orange */
-        --color-accent-hover: #e0600a;
+        --color-primary: #ffc300;
+        --color-primary-contrast: #1f1c24;
+        --color-primary-hover: #e6b000;
+        --color-secondary: #6b9e4d;
+        --color-secondary-hover: #5a8640;
+        --color-accent: #d85c00;
+        --color-accent-hover: #b84d00;
 
-        --color-success: #32cd32;
-        --color-error: #e53e3e;
-        --color-info: #00ffff;
-        
-        --color-highlight: #a3e635; /* lime-400 */
-        --color-highlight-text: #18181b;
-        --color-highlight-border: #a3e635;
-        --color-end-of-word: #ff7518; /* orange-500 */
-        --color-end-of-word-text: #18181b;
-        --color-end-of-word-border: #ff7518;
-        --color-node-bg: #4a5568; /* slate-700 */
-        --color-node-border: #718096; /* slate-500 */
-        --color-connector: #718096; /* slate-500 */
-        
-        --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
-        --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.6), 0 8px 10px -6px rgb(0 0 0 / 0.6);
+        --color-success: #6b9e4d;
+        --color-error: #d85c00;
+        --color-info: #ffc300;
+
+        --color-highlight: #ffc300;
+        --color-highlight-text: #1f1c24;
+        --color-highlight-border: #ffc300;
+        --color-end-of-word: #d85c00;
+        --color-end-of-word-text: #1f1c24;
+        --color-end-of-word-border: #ffc300;
+        --color-node-bg: #1f1c24;
+        --color-node-border: #6b9e4d;
+        --color-connector: #4b006e;
+
+        --shadow: 0 10px 20px -5px rgb(0 0 0 / 0.55), 0 0 24px rgb(255 195 0 / 0.08);
+        --shadow-lg: 0 20px 30px -8px rgb(0 0 0 / 0.65), 0 0 32px rgb(216 92 0 / 0.15);
       }
 
       body {
@@ -97,13 +91,13 @@
       }
 
       .bg-spooky-pattern {
+        background-color: var(--color-bg);
         background-image:
-          radial-gradient(circle at 100% 100%, transparent 4px, var(--color-border) 4px, var(--color-border) 5px, transparent 5px),
-          radial-gradient(circle at 0 0, transparent 4px, var(--color-border) 4px, var(--color-border) 5px, transparent 5px);
-        background-size: 32px 32px;
+          radial-gradient(ellipse 80% 50% at 50% 100%, rgb(75 0 110 / 0.35), transparent 55%),
+          radial-gradient(circle at 20% 20%, rgb(107 158 77 / 0.12), transparent 40%),
+          radial-gradient(circle at 80% 30%, rgb(255 195 0 / 0.06), transparent 35%);
       }
     </style>
-  <link rel="stylesheet" href="/index.css">
 </head>
   <body>
     <div id="root"></div>
